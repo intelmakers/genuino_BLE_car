@@ -10,11 +10,34 @@ BLEPeripheral blePeripheral;  // BLE Peripheral Device (the board you're program
 
 // ====  create Nordic Semiconductor UART service =========
 BLEService uartService = BLEService("6E400001B5A3F393E0A9E50E24DCCA9E");
+
 // create characteristics
 //write to motor, to change direction
 BLECharacteristic rxCharacteristic = BLECharacteristic("6E400002B5A3F393E0A9E50E24DCCA9E", BLEWriteWithoutResponse, 20);  // == TX on central (android app)
 BLECharacteristic txCharacteristic = BLECharacteristic("6E400003B5A3F393E0A9E50E24DCCA9E", BLENotify , 20); // == RX on central (android app)
 
+//function prototypes
+/*
+Function called when device connects
+*/
+void connectHandler(BLECentral& central);
+
+/*
+Function called when device disconnects
+*/
+void disconnectHandler(BLECentral& central);
+
+/*
+Function to change the motor movement
+*/
+void motorState(byte state);
+
+/*
+Function called when user updates the motor state
+*/
+void writeHandler(BLECentral& central, BLECharacteristic& characteristic);
+
+//main functions, setup and loop
 void setup()
 {
 	Serial.begin(9600);
@@ -38,11 +61,11 @@ void setup()
 	blePeripheral.addAttribute(txCharacteristic);
 
 	// assign event handlers for connected, disconnected to peripheral
-	blePeripheral.setEventHandler(BLEConnected, blePeripheralConnectHandler);
-	blePeripheral.setEventHandler(BLEDisconnected, blePeripheralDisconnectHandler);
+	blePeripheral.setEventHandler(BLEConnected, connectHandler);
+	blePeripheral.setEventHandler(BLEDisconnected, disconnectHandler);
 
 	// assign event handler for characteristic
-	rxCharacteristic.setEventHandler(BLEWritten, rxCharacteristicWritten);
+	rxCharacteristic.setEventHandler(BLEWritten, writeHandler);
 
 	// advertise the service
 	blePeripheral.begin();
@@ -54,7 +77,14 @@ void loop()
 	blePeripheral.poll();  
 }
 
-void blePeripheralConnectHandler(BLECentral& central)
+//function implementations
+
+/*
+Connect and disconnect handlers.
+if device is connected, turn on LED on pin 13.
+If disconnected, turn off LED on pin 13
+*/
+void connectHandler(BLECentral& central)
 {
 	// central connected event handler
 	Serial.print("Connected event, central: ");
@@ -64,7 +94,7 @@ void blePeripheralConnectHandler(BLECentral& central)
 
 }
 
-void blePeripheralDisconnectHandler(BLECentral& central)
+void disconnectHandler(BLECentral& central)
 {
 // central disconnected event handler
 	Serial.print("Disconnected event, central: ");
@@ -75,43 +105,50 @@ void blePeripheralDisconnectHandler(BLECentral& central)
 
 }
 
-void rxCharacteristicWritten(BLECentral& central, BLECharacteristic& characteristic)
+/*
+Function called when user updates the motor state
+*/
+void writeHandler(BLECentral& central, BLECharacteristic& characteristic)
 {
 	// central wrote new value to characteristic, update LED
 	Serial.print("Characteristic event, written: ");
-	if (characteristic.value())
-	{       //null pointer check
-		int state = *characteristic.value();  //set state to be the value written from the phone/tablet to the Arduino 101
-		Serial.println((char)state);      //print out the character to the serial monitor
+	byte state = characteristic[0];  //if the data is null, state will be 0
+	if (state)
+	{		
+		Serial.println(state);      //print out the character to the serial monitor
 		//change motor state
 		motorState(state);
 
 	}
 
 }
-void motorState(int state)
+/*
+This function changes the motor state. 
+Meaning if the car goes forward, backward, left or right
+*/
+void motorState(byte state)
 {
 	switch(state)
 	{
-	case 49:
+	case '1':
 		digitalWrite(m1, HIGH);
 		digitalWrite(m2, LOW);
 		digitalWrite(m3, HIGH);
 		digitalWrite(m4, LOW);
 		break;
-	case 50:
+	case '2':
 		digitalWrite(m1, LOW);
 		digitalWrite(m2, HIGH);
 		digitalWrite(m3, HIGH);
 		digitalWrite(m4, LOW);
 		break;
-	case 51:
+	case '3':
 		digitalWrite(m1, HIGH);			
 		digitalWrite(m2, LOW);
 		digitalWrite(m3, LOW);
 		digitalWrite(m4, HIGH);
 		break;
-	case 52:
+	case '4':
 		digitalWrite(m1, LOW);			
 		digitalWrite(m2, HIGH);
 		digitalWrite(m3, LOW);
