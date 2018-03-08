@@ -112,10 +112,10 @@ void writeHandler(BLECentral& central, BLECharacteristic& characteristic)
 {
 	// central wrote new value to characteristic, update LED
 	Serial.print("Characteristic event, written: ");
-	byte state = characteristic[0];  //if the data is null, state will be 0
-	if (state)
+	if (characteristic.value())
 	{		
-		Serial.println(state);      //print out the character to the serial monitor
+		int state = *characteristic.value();
+		Serial.println((char)state);      //print out the character to the serial monitor
 		//change motor state
 		motorState(state);
 
@@ -128,6 +128,10 @@ Meaning if the car goes forward, backward, left or right
 */
 void motorState(byte state)
 {
+	digitalWrite(m1, LOW);			
+	digitalWrite(m2, LOW);
+	digitalWrite(m3, LOW);
+	digitalWrite(m4, LOW);
 	switch(state)
 	{
 	case '1':

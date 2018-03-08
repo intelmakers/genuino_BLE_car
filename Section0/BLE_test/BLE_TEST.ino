@@ -1,4 +1,4 @@
-#include <Curie.h>
+#include <CurieBle.h>
 const int LED = 13;//led pin
 
 void setup()
