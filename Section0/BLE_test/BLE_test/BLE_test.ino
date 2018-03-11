@@ -42,8 +42,9 @@ void setup()
 	Bluetooth setup:
 	*/
 	
-	//First set the name of the peripheral, I choose this name
-	blePeripheral.setLocalName("My little LED");
+	//First set the name of the peripheral, I choose this name.
+	//Change the name to something more unique
+	blePeripheral.setLocalName("BLE LED");
 	
 	//Then, we set the UUID that the client sees as a UART device
 	blePeripheral.setAdvertisedServiceUuid(uartService.uuid());
