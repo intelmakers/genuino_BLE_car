@@ -4,3 +4,4 @@
 platformio.ini
 lib/
 .travis.yml
+*.db
