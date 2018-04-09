@@ -128,41 +128,13 @@ Meaning if the car goes forward, backward, left or right
 */
 void motorState(byte state)
 {
-	digitalWrite(m1, LOW);			
-	digitalWrite(m2, LOW);
-	digitalWrite(m3, LOW);
-	digitalWrite(m4, LOW);
-	switch(state)
+	//choose which number will change direction, assuming that 1 will be forward:
+	if(state == '1')
 	{
-	case '1':
 		digitalWrite(m1, HIGH);
 		digitalWrite(m2, LOW);
 		digitalWrite(m3, HIGH);
 		digitalWrite(m4, LOW);
-		break;
-	case '2':
-		digitalWrite(m1, LOW);
-		digitalWrite(m2, HIGH);
-		digitalWrite(m3, HIGH);
-		digitalWrite(m4, LOW);
-		break;
-	case '3':
-		digitalWrite(m1, HIGH);			
-		digitalWrite(m2, LOW);
-		digitalWrite(m3, LOW);
-		digitalWrite(m4, HIGH);
-		break;
-	case '4':
-		digitalWrite(m1, LOW);			
-		digitalWrite(m2, HIGH);
-		digitalWrite(m3, LOW);
-		digitalWrite(m4, HIGH);
-		break;			
-	default:
-		digitalWrite(m1, LOW);			
-		digitalWrite(m2, LOW);
-		digitalWrite(m3, LOW);
-		digitalWrite(m4, LOW);			
-		break;
 	}
+	//TODO add more direction, you can also add more options, to your desire!
 }
