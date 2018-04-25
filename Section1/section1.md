@@ -34,5 +34,5 @@ Done with wires, let's go over the code:
 
 ## Code
 
-[Link to the base code](./code no1/)
+[Link to the base code](./code%20no1/)
 
