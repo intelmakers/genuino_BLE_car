@@ -1,4 +1,5 @@
 #include <CurieBLE.h>
+//be creative!
 #define DEVICE_NAME "CHOOSE_YOUR_NAME"
 //motor control pins
 const int m1 = 8; 
@@ -136,5 +137,5 @@ void motorState(byte state)
 		digitalWrite(m3, HIGH);
 		digitalWrite(m4, LOW);
 	}
-	//TODO add more direction, you can also add more options, to your desire!
+	//TODO add more directions (backward, turn right and left)
 }
