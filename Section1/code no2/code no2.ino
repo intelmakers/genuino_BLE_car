@@ -1,5 +1,5 @@
 #include <CurieBLE.h>
-#define DEVICE_NAME "CHOOSE_YOUR_NAME"
+#define DEVICE_NAME "GENUINO CAR"
 //motor control pins
 const int m1 = 8; 
 const int m2 = 9;
@@ -128,37 +128,43 @@ Meaning if the car goes forward, backward, left or right
 */
 void motorState(byte state)
 {
-	//choose which number will change direction, assuming that 1 will be forward:
-	digitalWrite(m1, LOW);			
-	digitalWrite(m2, LOW);
-	digitalWrite(m3, LOW);
-	digitalWrite(m4, LOW);
-	if (state == '1')
+	static byte lastState = 0;
+	if(state != lastState)
 	{
-		digitalWrite(m1, HIGH);
-		digitalWrite(m2, LOW);
-		digitalWrite(m3, HIGH);
-		digitalWrite(m4, LOW);
-	}
-	else if (state == '2')
-	{
-		digitalWrite(m1, LOW);
-		digitalWrite(m2, HIGH);
-		digitalWrite(m3, HIGH);
-		digitalWrite(m4, LOW);
-	}
-	else if (state == '3')
-	{
-		digitalWrite(m1, HIGH);			
-		digitalWrite(m2, LOW);
-		digitalWrite(m3, LOW);
-		digitalWrite(m4, HIGH);
-	}
-	else if (state == '4')
-	{
+		lastState = state;
+		//choose which number will change direction, assuming that 1 will be forward:
 		digitalWrite(m1, LOW);			
-		digitalWrite(m2, HIGH);
+		digitalWrite(m2, LOW);
 		digitalWrite(m3, LOW);
-		digitalWrite(m4, HIGH);
+		digitalWrite(m4, LOW);
+		delay(100);
+		if (state == '1')
+		{
+			digitalWrite(m1, HIGH);
+			digitalWrite(m2, LOW);
+			digitalWrite(m3, HIGH);
+			digitalWrite(m4, LOW);
+		}
+		else if (state == '2')
+		{
+			digitalWrite(m1, LOW);
+			digitalWrite(m2, HIGH);
+			digitalWrite(m3, HIGH);
+			digitalWrite(m4, LOW);
+		}
+		else if (state == '3')
+		{
+			digitalWrite(m1, HIGH);			
+			digitalWrite(m2, LOW);
+			digitalWrite(m3, LOW);
+			digitalWrite(m4, HIGH);
+		}
+		else if (state == '4')
+		{
+			digitalWrite(m1, LOW);			
+			digitalWrite(m2, HIGH);
+			digitalWrite(m3, LOW);
+			digitalWrite(m4, HIGH);
+		}
 	}			
 }

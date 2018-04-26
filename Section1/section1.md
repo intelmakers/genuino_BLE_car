@@ -39,14 +39,11 @@ Upload the code to the arduino, and then send 1 using the application on your ph
 
 Let's say that the front is the side that Arduino sits on. If the car goes forward, you are good to go and implement the other directions. If it turns to either side, switch the wires of the motors on the H-bridge. If it goes backwards, switch both wires of both motors.
 
-
 ## Troubleshooting
 
-My car randomly stops!
-Most likely, that when you switch directions the motors consume a lot of current, which makes the voltage drop, and forces the arduino into reset. Try adding a big capacitor (1000μF, make sure it is rated for atleast 16V!)  
-![electrolitic capacitor](./pictures/bigcap.jpg)
+### My car randomly stops!
 
-If it still doesn't work, try adding a small capacitor in parallel to the big capacitor (10nF)  
-![ceramic capacitor](./pictures/smallcap.jpg)
+Most likely, that when you switch directions the motors consume a lot of current, which makes the voltage drop, and forces the arduino into reset. When switching directions, try stopping all of the motors, wait for about 100ms and then change the direction.
+If you don't like the delay, add a 1000μF and a 10nF in paraller to the battery output. __Make sure that the polarity of the capacitor is correct__. Then add 2 100nF capacitors(ceramic) in paraller to the motor.
 
-It t still doesn't work, added capacitors in paraller to the H-bridge motor connections (as shown in the picture TODO)
+###### [full code](./code%20no2/code%20no2.ino)
