@@ -1,5 +1,5 @@
 # Initialization of the working environment
-
+ 
 ## Installing Arduino IDE
 
 Install the Genuino 101 board drivers in the Arduino IDE, and test the Blink example
