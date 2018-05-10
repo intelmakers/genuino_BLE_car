@@ -22,7 +22,7 @@ If you can read this diagram, and you understand how to connect everything, [you
 
 If you are very scared, and can't understand how everything has to be connected, fear not! Follow this instructions:
 
-1. First, we connect everything to a common ground. We connect the negative side of the batteries (black wire) to the middle terminal of the H-bridge. Also, we connect the middle terminal to the negative wire of the arduino (black wire)
+1. First, we connect everything to a common ground (Using black wires). We connect the negative side of the batteries (black wire) to the middle terminal of the H-bridge. Also, we connect the middle terminal to the negative wire of the power jack  (black wire). We'll connect the power jack to the arduino
 
 1. Now, we connect the motors to the side terminals of the H-bridge.
 
